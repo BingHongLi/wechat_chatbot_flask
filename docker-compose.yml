@@ -1,0 +1,26 @@
+version: '3'
+services:
+  ai-chatbot-ngrok:
+    image: wernight/ngrok
+    container_name: ai-chatbot-ngrok.pri
+    ports:
+      - "4040:4040"
+    depends_on:
+      - ai-chatbot-jupyter
+    command: ngrok http ai-chatbot-jupyter.pri:5000
+  ai-chatbot-mongo:
+    image: mongo:3.4
+    container_name: ai-chatbot-mongo.pri
+    ports:
+      - "27017:27017"
+  ai-chatbot-jupyter:
+    image: b97607065/wechat-flask-wechat:latest
+    container_name: ai-chatbot-jupyter.pri
+    ports:
+      - "8888:8888"
+      - "5000:5000"
+    volumes:
+      - ./web:/home/jovyan/work
+    depends_on:
+      - ai-chatbot-mongo
+    command: start-notebook.sh --NotebookApp.token=''
