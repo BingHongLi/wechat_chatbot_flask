@@ -13,6 +13,14 @@ services:
     container_name: ai-chatbot-mongo.pri
     ports:
       - "27017:27017"
+  ai-chatbot-es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.1
+    container_name: ai-chatbot-es.pri
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
   ai-chatbot-jupyter:
     image: b97607065/wechat-flask-wechat:latest
     container_name: ai-chatbot-jupyter.pri
